@@ -1,0 +1,21 @@
+{
+  "name": "@code-agent/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "tsx src/index.tsx"
+  },
+  "dependencies": {
+    "ink": "^4.0.26",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.0.38",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}
+
