@@ -5,9 +5,16 @@
   "type": "module",
   "main": "src/index.tsx",
   "scripts": {
-    "start": "tsx src/index.tsx"
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "start": "tsx src/index.tsx",
+    "dev": "tsx --watch src/index.tsx"
   },
   "dependencies": {
+    "@code-agent/core": "*",
+    "@code-agent/types": "*",
+    "@code-agent/utils": "*",
     "ink": "^4.0.26",
     "react": "^18.2.0"
   },
