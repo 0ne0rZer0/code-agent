@@ -2,7 +2,9 @@
   "name": "code-agent",
   "private": "true",
   "version": "0.0.0",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "description": "Agentic system",
   "main": "index.js",
   "directories": {
@@ -30,7 +32,10 @@
   },
   "homepage": "https://github.com/0ne0rZer0/code-agent#readme",
   "devDependencies": {
-    "typescript": "^5.1.6",
-    "@types/node": "^20.4.2"
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "ink-spinner": "^5.0.0"
   }
 }

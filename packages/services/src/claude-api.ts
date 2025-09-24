@@ -2,6 +2,7 @@ import type { APIRequest, APIResponse, TokenUsage } from '@code-agent/types';
 import {
   BedrockRuntimeClient,
   ConverseCommand,
+  Message,
 } from "@aws-sdk/client-bedrock-runtime";
 
 // const axios = require('axios').default;
@@ -16,19 +17,19 @@ export class ClaudeAPIService {
     this.modelId = "anthropic.claude-3-haiku-20240307-v1:0";
   }
 
-  // async sendMessage(request?: APIRequest): Promise<AsyncIterable<APIResponse>> {
-  async sendMessage() {
-    const firstUserMessage = "What is the capital of Australia?";
-    const conversation = [{
+  async sendMessage(request?: string): Promise<string> {
+    const firstUserMessage = request ? request : "What is the capital of Australia?";
+    // create Message object from conversation
+    const conversation: Message[] = [{
       role: "user",
       content: [{ text: firstUserMessage }]
     }];
 
-    const firstResponse =  await this.client.send(
+    const firstResponse = await this.client.send(
       new ConverseCommand({ modelId: this.modelId, messages: conversation })
     );
-    const firstResponseText = firstResponse?.output?.message?.content[0]?.text;
-    console.log(`First response: ${firstResponseText}`);
+
+    return firstResponse?.output?.message?.content?.[0]?.text || "No response received."
   }
 
   async handleRetries(error: Error): Promise<void> {

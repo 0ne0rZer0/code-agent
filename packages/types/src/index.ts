@@ -94,14 +94,14 @@ export interface PermissionConfig {
   alwaysDeny: string[];
   requireConfirmation: string[];
   rememberDuration?: number; // minutes
-  projectBoundaryEnforcement: boolean;
+//  projectBoundaryEnforcement: boolean;
 }
 
 export interface UIConfig {
   theme: 'light' | 'dark' | 'auto';
   showCosts: boolean;
   showTokens: boolean;
-  showProgress: boolean;
+//  showProgress: boolean;
   terminalWidth?: number;
 }
 
