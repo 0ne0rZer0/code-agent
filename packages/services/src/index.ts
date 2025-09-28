@@ -2,6 +2,7 @@
 
 export * from './claude-api.js';
 export * from './configuration.js';
+export * from './open-router.js'
 
 // Re-export types that services might need
 export type { 

@@ -19,6 +19,10 @@ export interface Session {
   persistent?: boolean;
 }
 
+export enum LLMProvider {
+  CONVERSE,
+  OPENROUTER,
+}
 // -------------------------- 
 
 export interface MessageMetadata {

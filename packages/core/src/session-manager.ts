@@ -1,4 +1,4 @@
-import type { Message, Session } from '@code-agent/types';
+import { LLMProvider, type Message, type Session } from '@code-agent/types';
 import { CoreOrchestrator } from './orchestrator';
 
 export class SessionManager {
@@ -23,7 +23,7 @@ export class SessionManager {
 
   async sendMessage(input: string) {
     this.addMessage({ id: crypto.randomUUID(), role: 'user', content: input, timestamp: new Date()});
-    const response = await this.orchestrator.processUserInput(this.getConversationHistory());
+    const response = await this.orchestrator.processUserInput(this.getConversationHistory(), LLMProvider.OPENROUTER);
     const assistantMessage: Message = { id: crypto.randomUUID(), role: 'assistant', content: response, timestamp: new Date()};
     this.addMessage(assistantMessage);
     return assistantMessage;

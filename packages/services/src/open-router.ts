@@ -1,43 +1,40 @@
+import { ConverseOutputFilterSensitiveLog } from '@aws-sdk/client-bedrock-runtime';
 import type { APIRequest, APIResponse, TokenUsage } from '@code-agent/types';
-import {
-  BedrockRuntimeClient,
-  ConverseCommand,
-  Message,
-} from "@aws-sdk/client-bedrock-runtime";
-
 import {
   Message as CodeAgentMessage
 } from "@code-agent/types";
 
-export class ConverseBedrock {
-  private axiosInstance: any;
-  private client: BedrockRuntimeClient;
+export class OpenRouterAPIService {
   private modelId: string;
 
   constructor() {
-    this.client = new BedrockRuntimeClient({ region: "us-east-1" });
-    this.modelId = "anthropic.claude-3-haiku-20240307-v1:0";
+    this.modelId = "moonshotai/kimi-k2:free";
   }
 
   async sendMessage(conversation: CodeAgentMessage[]): Promise<string> {
-    
-    const claudeConversation: Message[] = conversation.map((message) => {
+    const openRouterConversation = conversation.map((message) => {
       return {
         role: message.role,
-        content: [
-          {
-            text: message.content
-          },
-        ],
+        content: message.content
       };
     });
 
-    const firstResponse = await this.client.send(
-      new ConverseCommand({ modelId: this.modelId, messages: claudeConversation })
-    );
-
-    return firstResponse?.output?.message?.content?.[0]?.text || "No response received."
-  }
+    const requestBody = {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: this.modelId,
+            messages: openRouterConversation
+        })
+    };
+    const firstResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", requestBody);
+    const data = await firstResponse.json();
+    const message = data.choices?.[0]?.message?.content;
+    return message || "No response recieved";
+   }
 
   async handleRetries(error: Error): Promise<void> {
     // Placeholder implementation - will be implemented in later tasks

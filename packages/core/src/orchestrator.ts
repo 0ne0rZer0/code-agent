@@ -1,9 +1,18 @@
-import type { Message, ToolCall, ToolResult } from '@code-agent/types';
-import {ClaudeAPIService} from '@code-agent/services'
+import { LLMProvider, Message, ToolCall, ToolResult } from '@code-agent/types';
+import { ConverseBedrock, OpenRouterAPIService } from '@code-agent/services'
 
 export class CoreOrchestrator {
-  async processUserInput(input: Message[]): Promise<string>{
-    const service = new ClaudeAPIService();
+  async processUserInput(input: Message[], provider: LLMProvider): Promise<string>{
+    var service;
+    switch(provider) {
+      case LLMProvider.OPENROUTER:
+        service = new OpenRouterAPIService()
+        break;
+      case LLMProvider.CONVERSE:
+      default:
+        service = new ConverseBedrock();
+        break;
+    }
     return service.sendMessage(input);
   }
 
