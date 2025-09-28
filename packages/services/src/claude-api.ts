@@ -5,6 +5,10 @@ import {
   Message,
 } from "@aws-sdk/client-bedrock-runtime";
 
+import {
+  Message as CodeAgentMessage
+} from "@code-agent/types";
+
 // const axios = require('axios').default;
 
 export class ClaudeAPIService {
@@ -17,16 +21,21 @@ export class ClaudeAPIService {
     this.modelId = "anthropic.claude-3-haiku-20240307-v1:0";
   }
 
-  async sendMessage(request?: string): Promise<string> {
-    const firstUserMessage = request ? request : "What is the capital of Australia?";
-    // create Message object from conversation
-    const conversation: Message[] = [{
-      role: "user",
-      content: [{ text: firstUserMessage }]
-    }];
+  async sendMessage(conversation: CodeAgentMessage[]): Promise<string> {
+    
+    const claudeConversation: Message[] = conversation.map((message) => {
+      return {
+        role: message.role,
+        content: [
+          {
+            text: message.content
+          },
+        ],
+      };
+    });
 
     const firstResponse = await this.client.send(
-      new ConverseCommand({ modelId: this.modelId, messages: conversation })
+      new ConverseCommand({ modelId: this.modelId, messages: claudeConversation })
     );
 
     return firstResponse?.output?.message?.content?.[0]?.text || "No response received."
@@ -47,6 +56,3 @@ export class ClaudeAPIService {
     console.log('Caching not yet implemented');
   }
 }
-
-const service = new ClaudeAPIService();
-service.sendMessage();

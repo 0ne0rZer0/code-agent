@@ -1,11 +1,25 @@
 // Core message types
 export interface Message {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
   metadata?: MessageMetadata;
 }
+
+// Session and state types
+export interface Session {
+  id: string;
+  messages: Message[];
+  toolResults?: ToolResult[];
+  context?: ConversationContext;
+  startTime: Date;
+  lastActivity?: Date;
+  metadata?: SessionMetadata;
+  persistent?: boolean;
+}
+
+// -------------------------- 
 
 export interface MessageMetadata {
   tokenCount?: number;
@@ -194,18 +208,6 @@ export interface APIError {
   code?: string;
   statusCode?: number;
   retryable: boolean;
-}
-
-// Session and state types
-export interface Session {
-  id: string;
-  messages: Message[];
-  toolResults: ToolResult[];
-  context: ConversationContext;
-  startTime: Date;
-  lastActivity: Date;
-  metadata: SessionMetadata;
-  persistent: boolean;
 }
 
 export interface ConversationContext {

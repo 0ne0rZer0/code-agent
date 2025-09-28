@@ -1,9 +1,10 @@
 import type { Message, ToolCall, ToolResult } from '@code-agent/types';
+import {ClaudeAPIService} from '@code-agent/services'
 
 export class CoreOrchestrator {
-  async processUserInput(input: string): Promise<void> {
-    // Placeholder implementation - will be implemented in later tasks
-    console.log('Processing user input:', input);
+  async processUserInput(input: Message[]): Promise<string>{
+    const service = new ClaudeAPIService();
+    return service.sendMessage(input);
   }
 
   async handleToolCalls(toolCalls: ToolCall[]): Promise<ToolResult[]> {
