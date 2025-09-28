@@ -1,4 +1,4 @@
-# code-agent
+# Code Agent [Last updated 29th September 2025]
 Agentic system for intelligent code assistance
 
 ![sample_agent](./docs/image.png)
