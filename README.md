@@ -9,6 +9,6 @@ Agentic system
 - [x] CLI init
 - [x] LLM Integration to CLI
 - [x] Session management
-- [] open router
-- [] provider switch
+- [x] open router
+- [x] provider switch
 - [] configuraiton
